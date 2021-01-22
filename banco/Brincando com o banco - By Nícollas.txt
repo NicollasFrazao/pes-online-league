@@ -1,0 +1,168 @@
+ALTER TABLE `db_liga_online`.`tb_usuario` ADD COLUMN `ic_tipo` TINYINT(1)  default 0 AFTER `dt_cadastro`;
+
+
+create table tb_plataforma
+(
+  cd_plataforma int not null auto_increment,
+  nm_plataforma varchar(20) unique,
+  constraint pk_plataforma
+    primary key (cd_plataforma)
+);
+
+create table tb_console
+(
+  cd_console int not null auto_increment,
+  nm_console varchar(20) unique,
+  cd_plataforma int,
+  constraint pk_console
+    primary key (cd_console),
+  constraint fk_console_plataforma
+    foreign key (cd_plataforma)
+      references tb_plataforma(cd_plataforma)
+);
+SELECT * FROM tb_console t;
+SELECT * FROM tb_plataforma t;
+
+create table usuario_plataforma
+(
+  cd_usuario int,
+  cd_plataforma int,
+  nm_nickname varchar(20),
+  constraint ck_usuario_plataforma
+    primary key (cd_usuario, cd_plataforma),
+  constraint fk_usuario_plataforma_usuario
+    foreign key (cd_usuario)
+      references tb_usuario(cd_usuario),
+  constraint fk_usuario_plataforma_plataforma
+    foreign key (cd_plataforma)
+      references tb_plataforma(cd_plataforma)
+);
+
+create table usuario_amigo
+(
+  cd_usuario int,
+  cd_amigo int,
+  dt_amizade datetime,
+  constraint ck_usuario_amigos
+    primary key (cd_usuario, cd_amigo),
+  constraint fk_usuario_amigo_usuario
+    foreign key (cd_usuario)
+      references tb_usuario(cd_usuario),
+  constraint fk_usuario_amigo_amigo
+    foreign key (cd_amigo)
+      references tb_usuario(cd_usuario)
+);
+
+insert into usuario_amigo(cd_usuario, cd_amigo, dt_amizade) values (1,5, now());
+
+SELECT * FROM usuario_amigo u;
+
+ALTER TABLE `db_liga_online`.`usuario_amigo` ADD COLUMN `ic_logado` TINYINT(1) default 0 AFTER `dt_amizade`,
+ ADD COLUMN `dt_ultima_atividade` DATETIME AFTER `ic_logado`;
+
+select tb_usuario.nm_nickname as 'Amigo', tb_usuario.dt_ultima_atividade as 'Ultima Atividade', tb_usuario.ic_logado as 'Logado', (select count(ic_logado) from tb_usuario where ic_logado = 1) as 'Logados'
+  from usuario_amigo inner join tb_usuario
+    on usuario_amigo.cd_amigo = tb_usuario.cd_usuario
+      where usuario_amigo.cd_usuario = 1
+        order by tb_usuario.ic_logado desc, tb_usuario.nm_nickname asc;
+
+SELECT ic_logado FROM tb_usuario t;
+
+show triggers;
+
+delimiter $
+  create trigger tr_insert_usuario
+    after insert on tb_usuario
+      for each row
+    begin
+      insert into usuario_amigo(cd_usuario, cd_amigo, dt_amizade) values (new.cd_usuario, new.cd_usuario, now());
+    end $
+delimiter;
+
+update tb_usuario set dt_ultima_atividade = null;
+
+SELECT * FROM usuario_plataforma u;
+
+select usuario_plataforma.nm_nickname
+  from tb_usuario inner join usuario_plataforma
+    on tb_usuario.cd_usuario = usuario_plataforma.cd_usuario
+      inner join tb_plataforma
+        on usuario_plataforma.cd_plataforma = tb_plataforma.cd_plataforma;
+
+SELECT * FROM usuario_amigo u;
+
+drop trigger tr_insert_usuario;
+
+select tb_usuario.cd_usuario as 'Codigo', tb_usuario.nm_nickname as 'Amigo', tb_usuario.dt_ultima_atividade as 'Ultima Atividade', tb_usuario.ic_logado as 'Logado', (select count(tb_usuario.ic_logado) from usuario_amigo inner join tb_usuario on usuario_amigo.cd_amigo = tb_usuario.cd_usuario where tb_usuario.ic_logado = 1 and usuario_amigo.cd_usuario = 5) as 'Logados'
+  from usuario_amigo inner join tb_usuario
+    on usuario_amigo.cd_amigo = tb_usuario.cd_usuario
+      where usuario_amigo.cd_usuario = 5
+        order by tb_usuario.ic_logado desc, tb_usuario.nm_nickname asc;
+
+select count(tb_usuario.ic_logado) from usuario_amigo inner join tb_usuario on usuario_amigo.cd_amigo = tb_usuario.cd_usuario where tb_usuario.ic_logado = 1 and usuario_amigo.cd_usuario = 1;
+
+
+SELECT * FROM tb_usuario t;
+
+SELECT * FROM usuario_amigo u;
+
+delete from usuario_amigo where cd_amizade = 4;
+
+ALTER TABLE `db_liga_online`.`usuario_amigo` ADD COLUMN `cd_amizade` INT NOT NULL AUTO_INCREMENT unique;
+
+
+create table tb_chat
+(
+  cd_chat int not null auto_increment,
+  cd_amizade int,
+    primary key (cd_chat),
+  constraint fk_chat_amizade
+    foreign key (cd_amizade)
+      references usuario_amigo(cd_amizade)
+);
+
+create table tb_mensagem
+(
+  cd_mensagem int not null auto_increment,
+  nm_mensagem varchar(256),
+  dt_mensagem datetime,
+  cd_usuario int,
+  cd_amigo int,
+  constraint pk_mensagem
+    primary key (cd_mensagem),
+  constraint fk_mensagem_usuario
+    foreign key (cd_usuario)
+      references usuario_amigo(cd_usuario),
+  constraint fk_mensagem_amigo
+    foreign key (cd_amigo)
+      references usuario_amigo(cd_amigo)
+);
+
+create table tb_mensagem
+(
+  cd_mensagem int not null auto_increment,
+  nm_mensagem varchar(256),
+  dt_mensagem datetime,
+  cd_chat int,
+  constraint pk_mensagem
+    primary key (cd_mensagem),
+  constraint fk_mensagem_chat
+    foreign key (cd_chat)
+      references tb_chat(cd_chat)
+);
+
+SELECT * FROM tb_chat t;
+
+select distinct tb_usuario.nm_nickname, tb_mensagem.nm_mensagem, tb_mensagem.dt_mensagem
+  from usuario_amigo inner join tb_mensagem
+        on usuario_amigo.cd_usuario = tb_mensagem.cd_usuario
+          inner join tb_usuario
+            on tb_mensagem.cd_usuario = tb_usuario.cd_usuario
+          where (usuario_amigo.cd_usuario = 1 and usuario_amigo.cd_amigo = 5 and tb_mensagem.cd_usuario = 1 and tb_mensagem.cd_amigo = 5) or (usuario_amigo.cd_usuario = 5 and usuario_amigo.cd_amigo = 1 and tb_mensagem.cd_usuario = 5 and tb_mensagem.cd_amigo = 1)
+            order by tb_mensagem.cd_mensagem;
+
+SELECT * FROM tb_mensagem t;
+
+SELECT * FROM usuario_amigo u;
+
+update tb_mensagem set dt_mensagem = now();

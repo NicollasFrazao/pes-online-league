@@ -1,0 +1,807 @@
+<!DOCTYPE>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*
+			{
+				padding: 0px;
+				margin: 0px;
+				outline: none;
+				font-family: Century Gothic;
+				overflow: hidden;
+			}
+			
+			::-webkit-scrollbar {
+				height: 7px;
+				width: 7px;
+				background: RGBA(255,255,255,0.1);
+			}
+			
+			::-webkit-scrollbar-thumb
+			{
+				background:  gray;
+				-webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75);
+			}
+
+			::-webkit-scrollbar-corner
+			{
+				background:  white;
+			}
+			
+			#barra_superior
+			{
+				display: inline-block;
+				width: 100%;
+				height: 50px;
+				background-color: RGBA(0,0,0,1);
+				box-shadow: 0px 0px 2px 0px black;
+				z-index: 9999;
+				position: absolute;
+			}
+			
+			#logo
+			{
+				display: inline-block;
+				width: 75px;
+				margin-top:2px;
+				margin-left:10px;
+			}
+			
+			#btn_menu_topo
+			{
+				display: inline-block;
+				width: 25px;
+				height: 25x;
+				padding:15px;
+				z-index: 9999;
+			}
+			
+			#menu_topo img
+			{
+				display: inline-block;
+				width: 20px;
+				margin-left: 5px;
+			}
+			
+			#btn_menu_topo:hover
+			{
+				display: inline-block;
+				background-color: black;
+			}
+			
+			#menu_topo
+			{
+				display: none;
+				background-color: black;
+				margin-top:50px;
+				width: 130px;
+				height: 140px;
+				right: 0px;
+				position: absolute;
+				box-shadow: 0px 0px 2px 0px black;
+				z-index: 9999;
+			}
+			
+			#menu_topo label
+			{
+				display: inline-block;
+				width: 200px;
+				height: 50px;
+				position: absolute;
+				padding: 5px;
+				color: white;
+				font-size: 12px;
+				margin-top:-3px
+			}
+			
+			#table_menu_topo
+			{
+				display: inline-block;
+				width: 200px;
+				border: 0px solid transparent;
+				margin-left: -	5px;
+			}
+			
+			#menu_topo td
+			{
+				width: 100%;
+				height: 30px;
+			}
+			
+			#menu_topo td:hover
+			{
+				background-color: #c00000;
+			}
+			
+			#username
+			{
+				display: inline-block;
+				color: white;
+				right: 70px;
+				margin-top: 3px;
+				margin-right: 10px;
+			}
+			
+			
+			
+			#rig
+			{
+				display: inline-block;
+				position: absolute;
+				right: 0px;
+				z-index: 9999;
+				margin-top: -2px;
+			}
+			
+			#imgPerfil
+			{
+				display: inline-block;
+				width: 40px;
+				height: 40px;
+				padding:2px;
+				margin-right: 5px;
+				background-image: url('imagens/avatar.svg');
+				filter: blur(3px);
+			}
+			
+			#imgPerfilFoto
+			{
+				display: inline-block;
+				width: 99%;
+				padding:0%;
+			}
+			
+			#footer
+			{
+				display: inline-block;
+				width: 100%;
+				height: 30px;
+				bottom: 0px;
+				position: absolute;
+				background-color: RGBA(0,0,0,1);
+				z-index: 9998;
+				box-shadow: 0px 0px 1px 0px gray;
+			}
+			
+			#footer:hover
+			{
+				background-color: black;
+			}
+			
+			#btn_chat_all
+			{
+				display: inline-block;
+				position: absolute;
+				right: 0px;
+				height: 20px;
+				background-color: #c00000;
+				padding: 5px;
+			}
+			
+		
+			#amigos_usuario
+			{
+				display: none;
+				right: 0px;				
+				bottom: 0px;
+				width: 200px;
+				height: 100%;
+				position: fixed;
+				background-color: RGBA(0,0,0,0.8);
+				overflow: hidden;
+				z-index: 9997;
+			}
+			
+			#foto_amigo
+			{
+				display: inline-block;
+				width: 20px;
+				height: 20px;
+				padding:5px;
+			}
+			
+			#status
+			{
+				display: inline-block;
+				width: 20px;
+				
+			}
+			
+			#nome_amigo
+			{
+				color: white;
+				font-size: 10px;
+				text-shadow: 1px 0px black;
+			}
+			
+			#lista_amigos
+			{
+				display: inline-block;
+				width: 100%;
+				height: 90%;
+				overflow: auto;
+				overflow-x: hidden;
+				position: absolute;
+				margin-top:30px;
+				z-index: 9997;
+			}
+			
+			#midi
+			{
+				display: inline-block;
+				width: 100%;
+				height: 90%;
+				z-index: 9997;
+				position: fixed;
+			}	
+			
+			#amigos_online
+			{
+				display: inline-block;
+				right: 40px;
+				color: white;
+				position: absolute;
+				font-size: 12px;
+				margin-top:6px;
+				z-index: 9997;
+			}
+			
+			#amiguinho
+			{
+				display: inline-block;
+				width: 100%;
+				padding-top:5px;
+				padding-bottom:5px;
+				padding-left: 10px;
+			}
+			
+			#amiguinho:hover
+			{
+				display: inline-block;
+				width: 100%;
+				padding-top:5px;
+				padding-bottom:5px;
+				background-color: black;
+			}
+			
+			#chat_on
+			{
+				display: inline-block;
+				width: 90%;
+				height: 100%;
+				padding: 3px;
+				background-color: transparent;
+			}
+			
+			
+			#btn_chat_window
+			{
+				display: inline-block;
+				width: 200px;
+				background-color: #333;
+			}
+			
+			#chat_on table
+			{
+				display:inline-block;
+				width: 200px;
+			}
+			
+			#fecha_chat
+			{
+				display: inline-block;
+				background-color: transparent;
+				width: 20px;
+				top:5px;
+				color: white;
+				position: absolute;
+				right: 0px;
+				border: 0px solid transparent;
+			}
+			
+			#fecha_chat:hover
+			{
+				font-weight: bold;
+			}
+			
+			#chatconversa
+			{
+				display: inline-block;
+				background-color: #333;
+				width: 200px;
+				height: 30px;
+				z-index: 9999;
+				position: absolute;
+				bottom: 0px;
+				margin-left: 3px;
+				z-index: 9999;
+			}
+			
+			#conversa
+			{
+				display: none;
+				width: 100%;
+				height: 175px;
+			}
+			
+			#input_conversa
+			{
+				display: none;
+				width: 100%;
+				height: 27px;
+				margin-top:3px;
+				
+			}
+			
+			#txt_output_chat
+			{
+				display: inline-block;
+				background-color: RGBA(105,105,105,1);
+				color: white;
+				border: 0px;
+				width: 100%;
+				height: 100%;
+				resize: none;
+				overflow: auto;
+				padding: 5px;
+			}
+			
+			#txt_input_chat
+			{
+				display: inline-block;
+				background-color: RGBA(79,79,79,0.9);
+				color: white;
+				border: 0px;
+				width: 100%;
+				resize: none;
+				overflow: auto;
+				padding: 7px;
+				font-size: 10px;
+				text-shadow: 0px 1px gra;
+			}
+			
+			#central
+			{
+				display: inline-block;
+				color: white;
+				width: 100%;
+				position: fixed;
+				height: 100%;
+				bottom: 30px;
+				background-image: url('imagens/02.jpg');
+				z-index: 9995;				
+				background-size: 100%;
+				background-repeat: no-repeat;
+				background-attachment: fixed;
+				-webkit-background-size: cover;
+				-moz-background-size: cover;
+				filter: blur(5px);
+				
+			}
+			
+			#inicio
+			{
+				display: inline-block;
+				width: 100%;
+				height: 100%;
+				background-color: transparent;
+				border: 0px;
+				z-index: 9995;
+			}
+		</style>
+		
+	</head>
+	<body onselectstart='return false'>
+		<div id="all">
+			<div id="barra_superior">
+				<img id="logo" src="imagens/logo.svg">		
+				<table id="rig">
+					<tr>
+						<!--<td>
+							<div id="imgPerfil">
+								<img id="imgPerfilFoto" src="imagens/avatar.svg">
+							</div>
+						</td>-->
+						<td>
+							<label id="username">Jogador123</label>
+						</td>
+						<td>
+							<input type="image" src="imagens/menu_topo_squares.png" id="btn_menu_topo">
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div id="menu_topo">
+				<table id="table_menu_topo">
+					<tr>
+						<td>
+							<img src="imagens/configuracoes.png">						
+							<label>Configurações</label>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>
+							<img src="imagens/contas.png">	
+							<label>Contas</label>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>
+							<img src="imagens/ajuda.png">	
+							<label>Ajuda</label>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>
+							<img src="imagens/sair.png">	
+							<label>Sair</label>
+						</td>
+					</tr>
+				</table>
+			</div>	
+		</div>
+			<div id="amigos_usuario" align="left">
+			<br>
+				<div id="lista_amigos">
+					<div id="amiguinho">
+						<table>
+							<tr>
+								<td>
+									<img src="imagens/useronline.png" id="status">
+								</td>
+								<td>
+									<input type="image" src="imagens/avatar.svg" id="foto_amigo">
+								</td>
+								<td>
+									<label id="nome_amigo" style="font-weight:bold">Jogador123</label>
+								</td>
+								
+							</tr>
+						</table>
+					</div>
+					<div id="amiguinho">
+						<table>
+							<tr>
+								<td>
+									<img src="imagens/useronline.png" id="status">
+								</td>
+								<td>
+									<input type="image" src="imagens/avatar.svg" id="foto_amigo">
+								</td>
+								<td>
+									<label id="nome_amigo" style="font-weight:bold">Jogador123</label>
+								</td>
+								
+							</tr>
+						</table>
+					</div>
+					<div id="amiguinho">
+						<table>
+							<tr>
+								<td>
+									<img src="imagens/useronline.png" id="status">
+								</td>
+								<td>
+									<input type="image" src="imagens/avatar.svg" id="foto_amigo">
+								</td>
+								<td>
+									<label id="nome_amigo" style="font-weight:bold">Jogador123</label>
+								</td>
+								
+							</tr>
+						</table>
+					</div>
+					<div id="amiguinho">
+						<table>
+							<tr>
+								<td>
+									<img src="imagens/useronline.png" id="status">
+								</td>
+								<td>
+									<input type="image" src="imagens/avatar.svg" id="foto_amigo">
+								</td>
+								<td>
+									<label id="nome_amigo" style="font-weight:bold">Jogador123</label>
+								</td>
+								
+							</tr>
+						</table>
+					</div>
+					<div id="amiguinho">
+						<table>
+							<tr>
+								<td>
+									<img src="imagens/useronline.png" id="status">
+								</td>
+								<td>
+									<input type="image" src="imagens/avatar.svg" id="foto_amigo">
+								</td>
+								<td>
+									<label id="nome_amigo" style="font-weight:bold">Jogador123</label>
+								</td>
+								
+							</tr>
+						</table>
+					</div>
+					<div id="amiguinho">
+						<table>
+							<tr>
+								<td>
+									<img src="imagens/useroffline.png" id="status">
+								</td>
+								<td>
+									<input type="image" src="imagens/avatar.svg" id="foto_amigo">
+								</td>
+								<td>
+									<label id="nome_amigo">Jogador123</label>
+								</td>
+								
+							</tr>
+						</table>
+					</div>
+					<div id="amiguinho">
+						<table>
+							<tr>
+								<td>
+									<img src="imagens/useroffline.png" id="status">
+								</td>
+								<td>
+									<input type="image" src="imagens/avatar.svg" id="foto_amigo">
+								</td>
+								<td>
+									<label id="nome_amigo">Jogador123</label>
+								</td>
+								
+							</tr>
+						</table>
+					</div>
+					<div id="amiguinho">
+						<table>
+							<tr>
+								<td>
+									<img src="imagens/useroffline.png" id="status">
+								</td>
+								<td>
+									<input type="image" src="imagens/avatar.svg" id="foto_amigo">
+								</td>
+								<td>
+									<label id="nome_amigo">Jogador123</label>
+								</td>
+								
+							</tr>
+						</table>
+					</div>
+					<div id="amiguinho">
+						<table>
+							<tr>
+								<td>
+									<img src="imagens/useroffline.png" id="status">
+								</td>
+								<td>
+									<input type="image" src="imagens/avatar.svg" id="foto_amigo">
+								</td>
+								<td>
+									<label id="nome_amigo">Jogador123</label>
+								</td>
+								
+							</tr>
+						</table>
+					</div>
+					<div id="amiguinho">
+						<table>
+							<tr>
+								<td>
+									<img src="imagens/useroffline.png" id="status">
+								</td>
+								<td>
+									<input type="image" src="imagens/avatar.svg" id="foto_amigo">
+								</td>
+								<td>
+									<label id="nome_amigo">Jogador123</label>
+								</td>
+								
+							</tr>
+						</table>
+					</div>
+					<div id="amiguinho">
+						<table>
+							<tr>
+								<td>
+									<img src="imagens/useroffline.png" id="status">
+								</td>
+								<td>
+									<input type="image" src="imagens/avatar.svg" id="foto_amigo">
+								</td>
+								<td>
+									<label id="nome_amigo">Jogador123</label>
+								</td>
+								
+							</tr>
+						</table>
+					</div>
+					<div id="amiguinho">
+						<table>
+							<tr>
+								<td>
+									<img src="imagens/useroffline.png" id="status">
+								</td>
+								<td>
+									<input type="image" src="imagens/avatar.svg" id="foto_amigo">
+								</td>
+								<td>
+									<label id="nome_amigo">Jogador123</label>
+								</td>
+								
+							</tr>
+						</table>
+					</div>
+					<div id="amiguinho">
+						<table>
+							<tr>
+								<td>
+									<img src="imagens/useroffline.png" id="status">
+								</td>
+								<td>
+									<input type="image" src="imagens/avatar.svg" id="foto_amigo">
+								</td>
+								<td>
+									<label id="nome_amigo">Jogador123</label>
+								</td>
+								
+							</tr>
+						</table>
+					</div>
+					<div id="amiguinho">
+						<table>
+							<tr>
+								<td>
+									<img src="imagens/useroffline.png" id="status">
+								</td>
+								<td>
+									<input type="image" src="imagens/avatar.svg" id="foto_amigo">
+								</td>
+								<td>
+									<label id="nome_amigo">Jogador123</label>
+								</td>
+								
+							</tr>
+						</table>
+					</div>
+					<div id="amiguinho">
+						<table>
+							<tr>
+								<td>
+									<img src="imagens/useroffline.png" id="status">
+								</td>
+								<td>
+									<input type="image" src="imagens/avatar.svg" id="foto_amigo">
+								</td>
+								<td>
+									<label id="nome_amigo">Jogador123</label>
+								</td>
+								
+							</tr>
+						</table>
+					</div>
+				</div>
+				
+			</div>
+			<div id="central">
+				<iframe id="inicio" src="inicial.html"></iframe>
+			</div>
+			<div id="chatconversa">
+					<div id="btn_chat_window">
+						<table>
+							<tr>
+								<td>
+									<img src="imagens/useronline.png" id="status">
+								</td>
+								<td>
+									<label id="nome_amigo">Jogador123</label>
+								</td>
+								<td>
+									<input type="button" id="fecha_chat" value="X">
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div id="conversa">
+						<textarea id="txt_output_chat"></textarea>
+					</div>
+					<div id="input_conversa">
+						<textarea id="txt_input_chat"></textarea>
+					</div>
+				</div>
+		
+		<div id="footer">	
+			<div id="chat_on">
+				<!--<div id="btn_chat_window">
+					<table>
+						<tr>
+							<td>
+								<img src="imagens/useroffline.png" id="status">
+							</td>
+							<td>
+								<label id="nome_amigo">Jogador123</label>
+							</td>
+							<td>
+								<input type="button" id="fecha_chat" value="X">
+							</td>
+						</tr>
+					</table>
+				</div>-->
+			</div>
+			<label id="amigos_online">50</label><img src="imagens/chat.png" id="btn_chat_all">
+		</div>
+	</body>
+	<script>
+		window.onload = function()
+		{
+			//midi.style.height = body.height;
+			
+		}
+		
+		btn_chat_all.onclick = function()
+		{
+			ativaChat();
+		}
+		
+		
+		btn_menu_topo.onclick = function()
+		{
+			ativaMenuTopo();
+		}
+		
+		function ativaMenuTopo()
+		{
+			if(menu_topo.style.display == "none")
+			{
+				menu_topo.style.display = "inline-block";
+			}
+			else
+			{
+				menu_topo.style.display = "none"
+			}
+		}
+		
+		function ativaChat()
+		{
+			if(amigos_usuario.style.display == "none")
+			{
+				amigos_usuario.style.display = "inline-block";
+				btn_chat_all.style.backgroundColor = "#000000";
+			}
+			else
+			{
+				amigos_usuario.style.display = "none";
+				btn_chat_all.style.backgroundColor = "#c00000";
+			}
+		}
+		
+		btn_chat_window.onclick = function()
+		{
+			if(conversa.style.display == "none")
+			{
+				conversa.style.display = "inline-block";
+				input_conversa.style.display = "inline-block";
+				chatconversa.style.height = "230px";
+				chatconversa.style.backgroundColor ="#000";
+			}
+			else
+			{
+				conversa.style.display = "none";
+				input_conversa.style.display = "none";
+				chatconversa.style.height = "30px";
+				chatconversa.style.backgroundColor ="#333";
+				btn_chat_window.style.backgroundColor ="#333";
+			}
+			
+		}
+		
+	</script>
+</html>
